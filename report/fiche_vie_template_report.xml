@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+<data>
+		<template id="fiche_vie_template_report" >
+
+			
+		   <t t-call="report.html_container">
+				<t t-foreach="docs" t-as="o">
+			  
+					<t t-call="report.internal_layout">
+					<!-- <t t-foreach="docs" t-as="o"> -->
+						<div class="page">
+									
+									<div>
+									<img  src="C:\Program Files (x86)\Odoo 8.0-20170901\server\openerp\addons\gmao_alm/Logo_alpha-group.png"  height="90" width="170" />
+									</div>	
+									<br/><br/><br/>
+						 			<div>
+												<h4><span t-esc="o.line_id.name" /></h4>
+												<h4><span t-esc="o.name" /></h4>
+									</div>
+									<table border="1"  style="border-style:solid;margin-top:4%; width:100%;">
+											 
+										<tr style="height:20px;">
+											<th border="1"  style=" border-style:solid">Gamme</th>
+											<th border="1"  style=" border-style:solid">Sous Equipement </th>
+											<th border="1"  style=" border-style:solid">Emetteur</th>
+											<th border="1"  style=" border-style:solid">Intervenant</th>
+											<th border="1"  style=" border-style:solid">Ref OT</th>
+											<th border="1"  style=" border-style:solid">Semaine</th>
+											<th border="1"  style=" border-style:solid">Date Realisation</th>
+											<th border="1"  style=" border-style:solid">Periodicite</th>
+											
+											<th border="1"  style=" border-style:solid">duree prevue</th>
+											<th border="1"  style=" border-style:solid">duree realiser(prev)</th>
+											<th border="1"  style=" border-style:solid">duree realiser(corr)</th>
+											<th border="1"  style=" border-style:solid">symtome</th>
+											<th border="1"  style=" border-style:solid">cause</th>
+											<th border="1"  style=" border-style:solid">remede</th>
+											<th border="1"  style=" border-style:solid">verouillage</th>
+											<th border="1"  style=" border-style:solid">Observation</th>
+										</tr>
+										
+										<t t-foreach="o.incident_id" t-as="l">
+											<tr style="height:33px;">
+
+												<td border="1"  style=" border-style:solid">
+															<span t-esc="l.Ref_mp" /> 
+															<span t-esc="l.cmms_interc_id.name" /><br/> 
+												</td>	
+												
+												<td border="1"  style=" border-style:solid">
+															<span t-esc="l.Sous_Equip.designation" /><br/>
+												</td> 
+
+												<td border="1"  style=" border-style:solid">
+															<span t-esc="l.user_id.name" /><br/>
+												</td> 
+
+												<td border="1"  style=" border-style:solid">
+															<span t-esc="l.user2_id.name" /><br/>
+												</td> 
+												
+												<td border="1"  style=" border-style:solid">
+															<span t-esc="l.name" /><br/>
+												</td> 
+
+												<td border="1"  style=" border-style:solid">
+															<span t-esc="l.sm_new" /><br/>
+												</td> 	
+												
+												<td border="1"  style=" border-style:solid">
+															<span t-esc="l.date_r" /><br/>
+												</td> 												
+
+												<td border="1"  style=" border-style:solid">
+															<span t-esc="l.meters" /><br/>
+												</td>
+												
+												<td border="1"  style=" border-style:solid">
+															<span t-esc="l.duree_prevue_prev" /><br/>
+												</td> 
+
+												<td border="1"  style=" border-style:solid">
+															<span t-esc="l.duree_realiser_prev" /><br/>
+												</td> 
+
+												<td border="1"  style=" border-style:solid">
+															<span t-esc="l.duree_realiser_corr" /><br/>
+												</td> 
+
+												<td border="1"  style=" border-style:solid">
+															<span t-esc="l.diagnosistab_ids.symptome" /><br/>
+												</td> 
+
+												<td border="1"  style=" border-style:solid">
+															<span t-esc="l.diagnosistab_ids.name" /><br/>
+												</td> 
+												
+												<td border="1"  style=" border-style:solid">
+															<span t-esc="l.diagnosistab_ids.remede" /><br/>
+												</td> 
+
+												<td border="1"  style=" border-style:solid">
+															<span t-esc="l.diagnosistab_ids.verrouillage" /><br/>
+												</td> 
+												
+												<td border="1"  style=" border-style:solid">
+															<span t-esc="l.observation" /><br/>
+												</td> 
+											
+
+											</tr>
+										</t>
+										
+								    </table>
+
+						</div>
+					</t>
+				</t>
+				
+
+			</t>
+		 
+		</template>
+</data>
+</openerp>
+
+
+
+ 

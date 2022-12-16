@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report
+                    string="Fiche de Vie"
+                    id="action_report_fiche_vie"
+                    model="cmms.equipment"
+                    report_type="qweb-pdf"
+                    name="gmao_alm.fiche_vie_template_report"
+                    file="gmao_alm.fiche_vie_template_report"
+                />
+
+        </data>
+</openerp>
+
+ 

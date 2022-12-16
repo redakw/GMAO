@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+<data>
+		<template id="incident_template_report" >
+
+			
+		   <t t-call="report.html_container">
+				<t t-foreach="docs" t-as="o">
+			  
+					<t t-call="report.internal_layout">
+					<!-- <t t-foreach="docs" t-as="o"> -->
+						<div class="page">
+									
+									<div>
+									<img  src="C:\Program Files (x86)\Odoo 8.0-20170901\server\openerp\addons\gmao_alm/Logo_alpha-group.png"  height="90" width="170" />
+									</div>	
+
+						 			<div>
+											<t t-if="o.cmms_interc_id">
+												<h2 align="center">OT "Maintenance Corrective"</h2>
+											</t>
+											 
+											
+											<t t-if=" o.Ref_mp">
+												<h2 align="center">OT "Maintenance Preventive"</h2>
+											</t>
+									</div>
+
+									<t t-if=" o.Ref_mp">
+									<table   style="height:300px; width:40%;">
+
+
+												  <tr>
+													<th border="1"  >Ref OT:</th>
+													<td border="1"  ><span t-field="o.name" /> </td> 
+												  </tr>
+												  
+
+												  <tr>
+													<th border="1"  >Date OT:</th>
+													<td border="1"  ><span t-field="o.date" /> </td> 
+												  </tr>
+												  
+												  <tr>
+													<th border="1"  >Unité de mesure:</th>
+													<td border="1"  ><span t-field="o.meters" /> </td> 
+												  </tr>
+												  
+
+												  <tr>
+													<th border="1"  >Affectation:</th>
+													<td border="1"   ><span t-field="o.user2_id" /> </td> 
+												  </tr>
+												  
+												 <tr>
+													<th border="1"  >Responsable:</th>
+													<td border="1"  ><span t-field="o.user_id" /> </td> 
+												 </tr>
+
+												  <tr>
+													<th border="1"   >Semaine:</th>
+													<td border="1"   ><span t-field="o.sm_new" /> </td> 
+												  </tr>
+												  
+												  <tr>
+													<th border="1"  >Prochaine Date:</th>
+													<td border="1"   ><span t-field="o.days_next_due2" /> </td> 
+												  </tr>
+												  
+												  
+												  <tr>
+													<th border="1"  >Origine OT:</th>
+													<td border="1"   > <span t-field="o.Ref_mp" /></td>
+												  </tr>
+									</table>
+									</t>
+									
+									<t t-if=" o.cmms_interc_id">
+									<table border="1"  style="height:80px; border-style:solid;margin-top:4%;margin-left:80%; width:20%;">
+													
+												  <tr>
+													<th border="1"  style=" border-style:solid">Semaine</th>
+													<td border="1"  style=" border-style:solid"><span t-field="o.sm_new" /> </td> 
+												  </tr>
+												  
+												  <tr>
+													<th border="1"  style=" border-style:solid">Date OT</th>
+													<td border="1"  style=" border-style:solid"><span t-field="o.date" /> </td> 
+												  </tr>
+												  
+												  <tr>
+													<th border="1"  style=" border-style:solid">Date Souhaitée</th>
+													<td border="1"  style=" border-style:solid"><span t-field="o.days_next_due2" /> </td> 
+												  </tr>
+												  
+												  <tr>
+													<th border="1"  style=" border-style:solid">Origine OT</th>
+													<td border="1"  style=" border-style:solid"> <span t-field="o.cmms_interc_id" /> </td>
+												  </tr>
+												  
+												  <tr>
+													<th border="1"  style=" border-style:solid">Ref OT</th>
+													<td border="1"  style=" border-style:solid"> <span t-field="o.name" />/<span t-field="o.year" /> </td>
+												  </tr>
+									</table>
+									</t>
+
+									
+									<div>
+											<h4 align="center">Données Equipement</h4>
+									</div>
+									
+									<table border="1"  style="height:60px; border-style:solid;margin-top:4%; width:100%;">
+											 
+												
+												  <tr>
+													
+													<th border="1" style=" border-style:solid">Ligne de Production</th>
+													
+													<th border="1"  style=" border-style:solid">Libellé</th>
+													<th border="1" style=" border-style:solid">Sous Equipement</th>
+												  </tr>
+												  
+												  <tr>
+													 
+													<td border="1"  style=" border-style:solid"> <span t-field="o.equipment_id.line_id" /> </td> 
+													<td border="1"  style=" border-style:solid"> <span t-field="o.equipment_id" /> </td>
+													<td border="1"  style=" border-style:solid"> <span t-field="o.Sous_Equip.designation" /> </td> 
+													
+												  </tr>
+
+									</table>
+								 
+									<t t-if="o.cmms_interc_id">
+									<div>
+											<h4 align="center">Données Intervention</h4>
+									</div>
+									<table border="1"  style=" border-style:solid;margin-top:4%; width:100%;">
+											 
+												
+												  <tr style="height:40px;">
+													     
+													
+													<th border="1"  style=" border-style:solid">Destinataire</th>
+													<th border="1" style=" border-style:solid">Profil</th>
+													<th border="1" style=" border-style:solid">Priorite</th>
+													<th border="1" style=" border-style:solid">Panne</th>
+													
+												  </tr>
+												  
+												<tr style="height:70px;">
+													
+													<td border="1"  style=" border-style:solid"><span t-field="o.user_id" /></td> 
+													<td border="1"  style=" border-style:solid"> <span t-field="o.user2_id" /> </td> 
+													<td border="1"  style=" border-style:solid"> <span t-field="o.priorite_incident" /></td> 
+													<td border="1"  style=" border-style:solid"><span t-field="o.failure_incident" /> </td> 
+	
+		
+												</tr>
+		
+
+									</table>
+									</t>
+								
+									<div>
+											<h4 align="center">Maintenance</h4>
+									</div>
+									<div>
+											<t t-if="o.cmms_interc_id">
+									
+											 <table border="1"  style="height:80px; border-style:solid;margin-top:4%; width:100%;">
+
+												<tr style="height:40px;" >
+												<th border="1"  style=" border-style:solid">symptôme</th>
+												<td border="1"  style=" border-style:solid">
+												<t t-foreach="o.diagnosistab_ids" t-as="l">
+												<span t-esc="l.symptome" /><br/>
+
+												</t>
+												</td>
+												</tr>
+												 
+												<tr style="height:40px;" >
+												<th border="1"  style=" border-style:solid">Causes de Panne</th>
+
+												<td border="1"  style=" border-style:solid">
+												<t t-foreach="o.diagnosistab_ids" t-as="l">
+												<span t-esc="l.name" /><br/>
+
+												</t>
+												</td>
+												</tr>
+
+												<tr style="height:40px;" >
+												<th border="1"  style=" border-style:solid">Remede</th>
+												<td border="1"  style=" border-style:solid">
+												<t t-foreach="o.diagnosistab_ids" t-as="l">
+												<span t-esc="l.remede" /><br/>
+
+												</t>
+												</td>
+												</tr>
+
+												<tr style="height:40px;" >
+												<th border="1"  style=" border-style:solid">Verrouillage</th>
+												<td border="1"  style=" border-style:solid">
+												<t t-foreach="o.diagnosistab_ids" t-as="l">
+												<span t-esc="l.verrouillage" /><br/>
+
+												</t>
+												</td>
+												</tr>
+												<tr style="height:40px;" >
+												<th border="1"  style=" border-style:solid">Solution</th>
+												<td border="1"  style=" border-style:solid">
+												<t t-foreach="o.diagnosistab_ids" t-as="l">
+												<span t-esc="l.solution" /><br/>
+
+												</t>
+												</td>
+												</tr>
+												<tr style="height:40px;" >
+												<th border="1"  style=" border-style:solid">Duree</th>
+												<td border="1"  style=" border-style:solid">
+												<t t-foreach="o.diagnosistab_ids" t-as="l">
+												<span t-esc="l.Duree" /><br/>
+
+												</t>
+												</td>
+												</tr>
+												<tr style="height:40px;" >
+												<th border="1"  style=" border-style:solid">Observation</th>
+												<td border="1"  style=" border-style:solid">
+												<t t-foreach="o.diagnosistab_ids" t-as="l">
+												<span t-esc="l.Observation" /><br/>
+
+												</t>
+												</td>
+												</tr>
+												<tr style="height:40px;" >
+												<th border="1"  style=" border-style:solid">Date Realisation</th>
+												<td border="1"  style=" border-style:solid">
+												<t t-foreach="o.diagnosistab_ids" t-as="l">
+												<span t-esc="l.Date_realisation" /><br/>
+
+												</t>
+												</td>
+												</tr>
+
+
+												 </table>
+
+												 
+											</t>
+											
+											 
+											
+											<t t-if=" o.Ref_mp">
+												<table border="1"  style="border-style:solid;margin-top:4%; width:100%;">
+											 
+												
+												 <tr style="height:40px;">
+													<th border="1"  style=" border-style:solid">Question</th>
+													<th width="5%" border="1" style=" border-style:solid">Etat</th>
+													<th border="1" style=" border-style:solid">Profil</th>
+													<th border="1" style=" border-style:solid">PDR</th>
+													<th border="1" style=" border-style:solid">Consommables</th>
+													<th border="1" style=" border-style:solid">Outillage</th>
+													<th border="1" style=" border-style:solid">Etat Ref min</th>
+													<th border="1" style=" border-style:solid">Etat Ref max</th>
+													<th border="1" style=" border-style:solid">Unite</th>
+													<th border="1" style=" border-style:solid">Mesure</th>
+													<th border="1" style=" border-style:solid">Duree</th>
+													<th border="1" style=" border-style:solid">Duree Realiser</th>
+													<th border="1" style=" border-style:solid">Observation</th>
+												</tr>
+												
+											    <tr style="height:120px;">
+													
+													<td border="1"  style=" border-style:solid">
+														<t t-foreach="o.answers_ids_incident" t-as="l">
+															<span t-esc="l_index+1"/>)		<span t-esc="l.name" /><br/>
+																			
+														</t>
+													</td> 
+													<td border="1"  style=" border-style:solid">
+													<t t-foreach="o.answers_ids_incident" t-as="l">
+																			<span t-esc="l.etat" /><br/>
+																			
+														</t>
+													</td> 
+													<td border="1"  style=" border-style:solid">
+													<t t-foreach="o.answers_ids_incident" t-as="l">
+																			<span t-esc="l.profil" /><br/>
+																			
+														</t>
+													</td> 
+													<td border="1"  style=" border-style:solid">
+													<t t-foreach="o.answers_ids_incident" t-as="l">
+																			<span t-esc="l.pdr" /><br/>
+																			
+														</t>
+													</td> 
+													<td border="1"  style=" border-style:solid"> 
+													<t t-foreach="o.answers_ids_incident" t-as="l">
+																			<span t-esc="l.consommables" /><br/>
+																			
+														</t>
+													</td> 
+													<td border="1"  style=" border-style:solid">
+													<t t-foreach="o.answers_ids_incident" t-as="l">
+																			<span t-esc="l.outillage" /><br/>
+																			
+														</t>
+													</td> 
+													<td border="1"  style=" border-style:solid"> 
+													<t t-foreach="o.answers_ids_incident" t-as="l">
+																			<span t-esc="l.etat_ref" /><br/>
+																			
+														</t>
+													</td> 
+													<td border="1"  style=" border-style:solid"> 
+													<t t-foreach="o.answers_ids_incident" t-as="l">
+																			<span t-esc="l.etat_ref_max" /><br/>
+																			
+														</t>
+													</td> 
+													<td border="1"  style=" border-style:solid"> 
+													<t t-foreach="o.answers_ids_incident" t-as="l">
+																			<span t-esc="l.unite" /><br/>
+																			
+														</t>
+													</td> 
+													<td border="1"  style=" border-style:solid"> 
+													<t t-foreach="o.answers_ids_incident" t-as="l">
+																			<span t-esc="l.mesure" /><br/>
+																			
+														</t>
+													</td> 
+													<td border="1"  style=" border-style:solid"> 
+													<t t-foreach="o.answers_ids_incident" t-as="l">
+																			<span t-esc="l.duree" /><br/>
+																			
+														</t>
+													</td> 
+													<td border="1"  style=" border-style:solid"> 
+													<t t-foreach="o.answers_ids_incident" t-as="l">
+																			<span t-esc="l.duree_realiser" /><br/>
+																			
+														</t>
+													</td> 
+													<td border="1"  style=" border-style:solid">
+													<t t-foreach="o.answers_ids_incident" t-as="l">
+																			<span t-esc="l.Date_realisation" /><br/>
+																			
+														</t>
+													</td> 
+													<td border="1"  style=" border-style:solid"> 
+													<t t-foreach="o.answers_ids_incident" t-as="l">
+																			<span t-esc="l.observation" /><br/>
+																			
+														</t>
+													</td> 
+		
+												</tr>
+												</table>
+												
+												<!-- Pannier -->
+												<t t-if="o.Ref_mp=='PM-00220'">
+												<table border="1"  style="border-style:solid;margin-top:4%; width:100%;">
+											 
+												
+												<tr style="height:20px;">
+													<th border="1"  style=" border-style:solid">Reference</th>
+													<th border="1"  style=" border-style:solid">Etat</th>
+												</tr>
+												
+												<t t-foreach="o.panier_ot" t-as="l">
+													<tr style="height:33px;">
+														<td border="1"  style=" border-style:solid">
+																	<span t-esc="l.reference" /><br/>
+														</td> 
+														
+														<td border="1"  style=" border-style:solid">				 
+																	<span t-esc="l.etat" /><br/>
+														</td> 
+
+													</tr>
+												</t>
+												
+												</table>
+												</t>
+												<!-- Pannier -->
+												
+												<table border="1"  style="border-style:solid;margin-top:4%; width:100%;">
+											 
+												
+												<tr style="height:20px;">
+													<th border="1"  style=" border-style:solid">Remarque</th>
+												</tr>
+												
+												<tr style="height:120px;">													
+													<td border="1"  style=" border-style:solid">
+														<t t-foreach="o.answers_ids_incident" t-as="l">
+															<span t-esc="l_index+1"/>)<br/>
+																			
+														</t>
+													</td>
+												</tr>
+												</table>
+											</t>
+
+											<br/>
+											<table style="height:80px; width:100%;">
+											 <tr>
+												<!-- <th align="center">Visa Signature Destinataire </th> -->
+												<th align="right">Visa Signature Respobsable</th>
+												
+
+											</tr>
+											</table>
+											
+									</div>
+									
+
+									
+
+
+						</div>
+					</t>
+				</t>
+				
+
+			</t>
+		 
+		</template>
+</data>
+</openerp>
+
+<!--
+<td>
+	<t t-foreach="o.diagnosistab_ids" t-as="l">
+				<span t-esc="l.Duree" />
+				<span t-esc="l.name" />
+	</t>
+										 
+</td>
+-->
+
+ 

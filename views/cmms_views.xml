@@ -1,0 +1,877 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+	<data>
+ 
+
+		<!-- search view de l'interface cm-->
+		<!-- <record model="ir.ui.view" id="cmms_equipment_search"> -->
+			<!-- <field name="name">cmms.search.equipment</field> -->
+			<!-- <field name="model">cmms.equipment</field> -->
+			<!-- <field name="type">search</field> -->
+			<!-- <field name="arch" type="xml"> -->
+				<!-- <search string="Equipement"> -->
+
+					<!-- <field name="line_id"/> -->
+					<!-- <field name="name"/> -->
+					<!-- <field name="sous_equipement_type_ids" string="sous equipement"/> -->
+
+ 
+				 <!-- </search> -->
+			<!-- </field> -->
+		<!-- </record>	 -->
+
+		
+		<!-- l'Ajout des champs sous interface equipment-->
+		<record id="view_cmms_form_red" model="ir.ui.view">
+        	 
+        	<field name="model">cmms.equipment</field>
+        	<field  name="inherit_id"  ref="cmms.view_equipment_form"/>
+        	<field name="arch" type="xml">
+        	
+			
+          	<field name="name" position="after">                	
+				<h4>Type Machine</h4> <h3><field name="type_machine" string="Type Machine"/></h3>
+                <field name="nbr_equipment" string="Sequence"/>			 
+				<field name="ref" string="Type Machine"/>       	       	
+          	</field>			  
+        	</field>
+     	</record>
+		
+		
+		<!-- tree view de l'interface equipment-->
+		<record id="view_cmms_tree_machine" model="ir.ui.view">
+		
+        	<field name="name">cmms artner tree. nherit11</field>
+        	<field name="model">cmms.equipment</field>
+        	<field name="inherit_id" ref="cmms.view_equipment_list"/>
+        	<field name="arch" type="xml">
+			
+        	<field name="type" position="after">
+				<field name="type_machine" string="Type Machine"/>
+				<field name="ref" string="Ref Machine"/>
+        	</field>
+			<field name="deadlinegar" position='after' >
+				<field name="ot_regl"/>
+			</field>	
+			
+        	</field>
+     	</record>
+		
+		
+		<!-- Table Temporaire-->
+		<record id="view_cmms_form_reda" model="ir.ui.view">
+        	 
+        	<field name="model">cmms.table</field>
+        	<field name="inherit_id" ref="cmms.view_table_form"/>
+        	<field name="arch" type="xml">
+        	
+			<field name="date" position="after">
+			<button name="generer" type="object" string="Générer"  /> 
+			
+			<field colspan="4"  name="preventiv_ids" nolabel="1" readonly="1">
+				<tree editable="bottom" >
+					<field name="name"/>
+					<field name="line_id_pm"/>
+					<field name="equipment_id"/>
+					<field name="Sous_Equip"/>
+					<field name="days_next_due2"/>
+					<field name="meter"/>
+					<field name="emetteur"/>
+					<!-- <field name="affectation_mp"/> -->
+ 
+				</tree> 
+			</field>
+				
+					<button name="valider" type="object" string="Valider"  /> 
+					
+					<button name="annuler" type="object" string="Annuler" /> 
+						
+        	</field>
+        	</field>
+     	</record>
+		
+			<!-- search view de l'interface incident-->
+			<record model="ir.ui.view" id="cmms_incident_search">
+				<field name="name">cmms.incident.form</field>
+				<field name="model">cmms.incident</field>
+				<field name="type">search</field>
+				<field name="arch" type="xml">
+					<search string="incident research">
+					<group>
+	                	<filter  icon="terp-stage" string="Maintenance preventive" domain="[('type_maintenance_origin','=','Maintenance preventive')]" help=""/>
+	                	<filter  icon="terp-stage" string="Maintenance corrective" domain="[('type_maintenance_origin','=','Maintenance Corrective')]" help=""/>
+                	</group>
+
+					<group>
+	                	<filter  icon="terp-stage" string="MC" domain="[('nature_mc','=','mc')]" help=""/>
+	                	<filter  icon="terp-stage" string="Action MP" domain="[('nature_mc','=','action_mp')]" help=""/>
+						<filter  icon="terp-stage" string="OT réglementaire" domain="[('ot_regl','=',True)]" help=""/>
+                	</group>
+					
+					<group>
+	                	<filter  icon="terp-stage" name="lancer" string="Lancer" domain="[('statut_2','=','lancer')]" help=""/>
+	                	<filter  icon="terp-stage" string="Cloturer " domain="[('statut_2','=','cloturer')]" help=""/>
+                	</group>
+					<group expand="1" string="group by">
+						<filter name="equipment_id" string="Equipement"   context="{'group_by':'equipment_id'}" />
+						<filter name="Sous_Equip" string="Sous Equipement"   context="{'group_by':'Sous_Equip'}" />
+					</group>
+					<group expand="1" string="group by">
+						<filter name="user2_id" string="Intervenant"   context="{'group_by':'user2_id'}" />
+					</group>
+					<group expand="1" string="group by">
+						<filter name="date" string="Semaine"   context="{'group_by':'date:week'}" />
+						<filter name="date" string="Mois"   context="{'group_by':'date:month'}" />
+						<filter name="date" string="Annee"   context="{'group_by':'date:year'}" />
+					</group>
+					<group expand="1" string="group by">
+						<filter name="line_id_incident" string="Ligne de Production"   context="{'group_by':'line_id_incident'}" />
+					</group>
+					<group expand="1" string="group by">
+						
+						<filter  icon="terp-stage" string="Filage" domain="[('line_id_incident','=','Filage')]" help=""/>
+						<filter  icon="terp-stage" string="Laquage Horizontal" domain="[('line_id_incident','=','Laquage Horizontal')]" help=""/>
+						<filter  icon="terp-stage" string="Commun usine" domain="[('line_id_incident','=','Commun usine')]" help=""/>
+						<filter  icon="terp-stage" string="Barrettage" domain="[('line_id_incident','=','Barrettage')]" help=""/>
+					</group>
+
+					<group expand="1" string="group by">
+						<filter name="statut_2" string="Maintenance"   context="{'group_by':'type_maintenance_origin'}" />
+					</group>
+					
+					<group expand="1" string="group by">
+						<filter name="statut_2" string="statut"   context="{'group_by':'statut_2'}" />
+					</group>
+
+ 
+					
+						<newline/>
+						
+						<field name="name" string="Reference"/>
+						<field name="equipment_id"/>
+						<field name="Sous_Equip"/>
+						<field name="date"/>
+						<field name="month" />
+						<field name="year" />
+						<!-- <field name="sm"/> -->
+						<field name="sm_new"/>
+						<field name="meters"/>
+						<newline/>
+	 
+					 </search>
+				</field>
+		</record>
+		
+		<!-- search view de l'interface mp-->
+		<record model="ir.ui.view" id="cmms_mp_search">
+			<field name="name">cmms.search.MP</field>
+			<field name="model">cmms.pm</field>
+			<field name="type">search</field>
+			<field name="arch" type="xml">
+				<search string="Preventive research">
+
+					<field name="equipment_id"/>
+					<field name="name"/>
+					<field name="meter"/>
+					<group expand="1" string="group by">
+						
+						<filter  icon="terp-stage" string="Filage" domain="[('line_id_pm','=','Filage')]" help=""/>
+						<filter  icon="terp-stage" string="Laquage Horizontal" domain="[('line_id_pm','=','Laquage Horizontal')]" help=""/>
+						<filter  icon="terp-stage" string="Commun usine" domain="[('line_id_pm','=','Commun usine')]" help=""/>
+						<filter  icon="terp-stage" string="Barrettage" domain="[('line_id_pm','=','Barrettage')]" help=""/>
+					</group>
+					<filter  icon="terp-stage" string="OT réglementaire" domain="[('ot_regl','=',True)]" help=""/>
+ 
+				 </search>
+			</field>
+		</record>		
+
+		<!-- search view de l'interface cm-->
+		<record model="ir.ui.view" id="cmms_cm_search">
+			<field name="name">cmms.search.cm</field>
+			<field name="model">cmms.cm</field>
+			<field name="type">search</field>
+			<field name="arch" type="xml">
+				<search string="Preventive research">
+
+					<field name="equipment_id"/>
+					<field name="name"/>
+ 
+				 </search>
+			</field>
+		</record>	
+		
+			<!-- tree view de l'interface incident-->
+		<record id="view_cmms_tree_incident" model="ir.ui.view">
+        	<field name="name">cmms artner tree. nherit11</field>
+        	<field name="model">cmms.incident</field>
+        	<field name="inherit_id" ref="cmms.cmms_incident_tree-view"/>
+        	<field name="arch" type="xml">
+        	<field name="priority" position="after"> 
+				<field name="Ref_mp"/>			
+				<field name="cmms_interc_id"/>				
+				<field name="type_maintenance_origin"/>			
+				<field name="failure_incident" string="Panne" invisible="1"/>
+				<field name="meters" string="Unité de mesure"/>
+				<!-- <field name="sm" string="Semaine" invisible="1"/> -->
+				<field name="sm_new" string="Semaine" invisible="0"/>
+				<field name="year" string="annee" invisible="1"/>
+				<field name="month" string="mois" invisible="1"/>
+				
+				<!--	<field name="cmms_interc_id" string="Maintenance Corrective"/>
+				<field name="cmms_interp_id" string="Maintenance Preventive"/> -->
+        	</field>
+			<field name="state" position="replace">    
+				<field name="user2_id" string="Intervenant"/>
+				<field name="statut_2" string="statut"/>
+				<field name="impr" string="impr"/>
+				<field name="date_impr" string="Date impr"/>
+				<field name="user_impr" string="impr par"/>				
+				<field name="date_r" string="Date realisation" invisible="1"/>				
+				<field name="action_global" string="Action global" invisible="0"/>
+				<field name="duree_prevue_prev" string=" duree_prevue_prev" />
+				<field name="duree_prevue_prev_mep" string=" duree_prevue_prev_mep" />
+				<field name="duree_prevue_prev_aht" string=" duree_prevue_prev_aht" />
+				<field name="duree_realiser_prev" string=" duree_realiser_prev"/>				
+				<field name="duree_realiser_corr" string=" duree_realiser_corr"/>  				
+        	</field>
+			
+			<field name="equipment_id" position="after">          
+				<field name="Sous_Equip" string="Sous_Equip"/>
+        	</field>
+
+			<field name="equipment_id" position="before">          
+				<field name="line_id_incident" string="Ligne de Production" invisible="1"/>
+        	</field>
+        	</field>
+     	</record>
+		
+		<record id="cmms_incident_tree_view_inherit" model="ir.ui.view">
+            <field name="name">cmms.incident.tree</field>
+            <field name="model">cmms.incident</field>
+            <field name="type">tree</field>
+			<field name="priority">20</field>
+            <field name="arch" type="xml">
+                <tree string="Incident">
+                    <field name="name" readonly="1" />
+                    <field name="state"/>
+                    <field name="user_id" string="Emetteur"/>
+                    <field name="date"/>
+                    <field name="action" invisible="1"/>
+                    <field name="duree"/>
+                    <field name="duree_realiser"/>
+                    <field name="date_r"/>
+                    <!-- <field name="realisation_date"/> -->
+                    <field name="priorite_incident"/>
+                    <field name="equipment_id"/>
+                    <field name="Sous_Equip"/>
+                    <field name="active"/>
+                    <field name="type_maintenance"/>
+                    <field name="maintenance"/>
+                    <field name="observation"/>
+                    <field name="user2_id"/>           
+                    <!-- <field name="sm"/>                      -->
+                    <field name="meters"/>                     
+                    <field name="action_global" string="Action global" invisible="0"/>                 
+ 
+                </tree>
+            </field>
+        </record>
+		
+		<record id="cmms_fiche_incident_action" model="ir.actions.act_window">
+            <field name="name">cmms.fiche_vie</field>
+            <field name="res_model">cmms.incident</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[('state', '=', 'done')]</field>
+            <field name="view_id" ref="cmms_incident_tree_view_inherit"/>
+        </record>
+		
+		<!-- <menuitem id="cmms_incident_menu" -->
+				   <!-- name="Fiche de Vie (test)" -->
+				   <!-- parent="cmms.menu_open_view_incident_list" -->
+				   <!-- action="cmms_fiche_incident_action"   -->
+				   <!-- sequence="10"/> -->
+		
+		
+		<!-- Questions Bon de Travail-->
+		 <record model="ir.ui.view" id="bon_travail_intervention">
+            <field name="name">bon de travail demande Intervention </field>
+            <field name="model">cmms.incident</field>
+            <field name="inherit_id" ref="cmms.cmms_incident-view"/>
+            <field name="arch" type="xml">
+                <data>
+				
+				<!-- l'emplacement du demande d'intervention and corrective and preventive au niveau de bon de travail-->
+				<xpath expr='/form/sheet//group[4]' postion='replace'>
+						 
+						<field name="cmms_interc_id" readonly="1" attrs="{'invisible': [('cmms_interc_id', '=',False)]}"/>
+						<field name="Ref_mp" readonly="1" attrs="{'invisible': [('Ref_mp', '=',False)]}"/>
+			    </xpath>
+				
+				<!-- l'emplacement du checklist au niveau du bon de travail-->
+				<xpath expr='/form/sheet/notebook//page[2]' position="before" >
+
+                 
+				<page string="Maintenance Preventive"  attrs="{'invisible': [('cmms_interc_id', '!=',False)]}">
+                    <field name="answers_ids_incident" colspan="4" nolabel="1">
+					      
+					
+                        <tree string="Answers" editable="bottom" delete="false" create="false">
+                            <field name="name" select="1"/>
+							<field name="etat" select="1"/>
+                            <field name="profil" select="1"/>
+                            <field name="pdr" select="1"/>
+                            <field name="consommables" select="1"/>
+                            <field name="outillage" select="1"/>
+                            <field name="etat_ref" select="1"/>
+                            <field name="etat_ref_max" select="1"/>
+                            <field name="unite" select="1"/>
+                            <field name="mesure" select="1"/>
+                            <field name="action" select="1" readonly="1" invisible="1"/>
+                            <field name="duree" select="1" widget='float_time' readonly="1" />
+                            <field name="duree_realiser" select="1" widget='float_time' />
+							<field name="statut_ok"/>
+							<field name="ot_idp_incident_mc" domain="[('statut_2','!=','cloturer'),('cmms_interc_id', '!=',False)]"/> 
+							<!-- <field name="ref_mc" select="1" attrs="{'invisible': [('cmms_interc_id', '=',False)]}"  />   -->
+							<!-- <field name="user2_id"/>intervenant -->
+							<field name="Date_realisation" invisible="1"  />
+                            <field name="observation" select="1" invisible="1"/>
+                        </tree>
+						
+						
+                    </field>
+				</page>
+ 
+ 
+				</xpath>
+
+				<!-- l'emplacement du tableau de panne du bon de travail-->
+			 
+				<xpath expr='/form/sheet/notebook//page[2]' position="before" >
+
+
+					<page string="Maintenance Corrective"   attrs="{'invisible': [('Ref_mp', '!=',False)]}"> 
+					
+					   <field colspan="4" name="diagnosistab_ids" nolabel="1">
+						<tree editable="bottom" >
+                            <field name="symptome"  />
+                            <field name="name"  />
+                            <field name="remede"  />
+                            <field name="verrouillage"  />
+							<field name="solution"  />
+							<field name="Duree"  widget='float_time' />
+							<field name="Observation"  />
+							<field name="Date_realisation"  />
+							<!-- <field name="user2_id"/> intervenant-->
+				 
+						</tree>
+					   </field>
+
+					</page>
+				
+ 	
+				</xpath>
+
+				<xpath expr='/form/sheet/notebook//page[3]' position="after" >
+					<page string="PDR" > 
+						<field name="organe"  style="width:70%"/><button name="pdr_valider" type="object" string="Valider" icon="STOCK_REDO" attrs="{'invisible': [('confirmation', '=','confirmer')]}" />
+						<field name="confirmation"  style="width:10%"/>	
+					</page> 	
+				</xpath>
+				
+				<xpath expr='/form/sheet/notebook//page[4]' position="after" >
+					<page string="Observation" > 
+						<field name="observation"  />					
+					</page> 	
+				</xpath>
+
+				<xpath expr='/form/sheet/notebook//page[4]' position="after">
+					<page string="Panier" position="after"> 
+						<field name="panier_ot" colspan="4" nolabel="1" attrs="{'invisible': [('Ref_mp', '!=','PM-00220')]}" >   
+							<tree string="Answers" editable="bottom">
+								<field name="reference" select="1"/>
+								<field name="etat" select="1"/>
+							</tree>
+						</field>
+					</page> 	
+				</xpath>
+				
+				<field name="equipment_id" position="before">
+					<field name="nature_mc" invisible="1"/>
+					<field name="line_id_incident"/>
+				</field> 
+
+				<field name="equipment_id" position='replace'>
+						<field name="equipment_id"/>
+						 <!-- domain="[('line_id_intervention','=',line_id_intervention)]" -->
+				</field>
+				
+				<field name="priority" position="after">
+						<field name="meters"/>
+						<field name="statut_2"/>
+						<field name="date_r"/>
+						<field name="activ" invisible="1"/>
+						<field name="activ2" invisible="1"/>
+						<field name="failure_incident"/>
+						<field name="description_panne_incident"/>
+						<field name="user2_id" string="Intervenant"/>
+						<field name="action_global" string="Action global"/>
+						<field name="attch_ids" widget="many2many_binary" attrs="{'readonly':[('statut_2','=','cloturer')]}" />
+						<field name="duree_realiser_prev" string=" duree_realiser_prev" invisible="1"/>
+						<field name="duree_prevue_prev" string=" duree_prevue_prev" invisible="1"/>  
+						<field name="duree_prevue_prev_mep" string=" duree_prevue_prev_mep" invisible="1"/>
+						<field name="duree_prevue_prev_aht" string=" duree_prevue_prev_aht" invisible="1"/>
+						<field name="duree_realiser_corr" string=" duree_realiser_corr" invisible="1"/>  
+						
+						<!-- <field name="ot_idp_incident_mc2"  domain="[('equipment_id','=',equipment_id),('Sous_Equip','=',Sous_Equip),('statut','!=','cancel')]"/>  -->
+						
+				</field>
+				
+				<!-- <field name="user_id" position="after"> -->
+						<!-- <field name="date_actuel"/> -->
+				<!-- </field>  -->
+				
+				<field name="active" position="after">
+						<field name="days_next_due2"  attrs="{'invisible': [('Ref_mp', '=',False)]}"/>
+						<field name="ot_regl"/>
+						<field name="affectation_incident" invisible="1"/>
+						<!-- <field name="sm" /> -->
+						<!-- <field name="statut"/> -->
+				</field> 
+				
+				<field name="equipment_id" position="after">
+			
+						<field name="Sous_Equip"/>
+				
+				</field> 
+				
+				<xpath expr="/form/header" position="replace" >
+
+					<header>
+						<button name="action_done" attrs="{'invisible': [('statut_2', '=','cloturer')]}" string="Valider." type="object" class="oe_read_only"  icon="gtk-apply"/>
+						<!-- <button name="action_done" attrs="{'invisible': ['|',('activ2', '!=',True),('statut_2', '=','cloturer')]}"  string="Valider." type="object" class="oe_read_only"  icon="gtk-apply"/> -->
+		                <button name="action_cancel" attrs="{'invisible': [('state', '!=','done')]}" string="Annuler" type="object" class="oe_read_only" icon="gtk-cancel" invisible="1"/>
+		                <button name="action_draft" attrs="{'invisible': [('state', '=','draft')]}" string="Remettre en brouillon" class="oe_read_only" type="object" icon="terp-stock_effects-object-colorize"  invisible="1"/>
+                		<field name="state" widget="statusbar" />
+                    </header>
+				
+				</xpath>
+				
+				<!--
+				<field name="ref" position="after">
+				
+				<field name="pt" colspan="4" nolabel="1">
+					  
+				
+					<tree string="print" editable="bottom">
+					 
+						
+						
+		 
+					</tree>
+					
+					
+				</field>
+				</field>-->
+				
+				</data>
+            </field>
+        </record> 
+		
+		
+
+
+		<!--  creation d'OT au niveau du mantenance corrective -->
+		
+		<record model="ir.ui.view" id="corrective_to_bon_travaill">
+            <field name="name">M corrective</field>
+            <field name="model">cmms.cm</field>
+            <field name="inherit_id" ref="cmms.view_cm_form"/>
+			
+            <field name="arch" type="xml">
+			<data>	
+                
+				<xpath expr='/form/sheet//group[1]' position='before'>
+					<button name="to_bon_travaill" type="object" string="Créer OT" icon="STOCK_REDO" attrs="{'invisible': [('active_correction', '=',True)]}"  class="oe_read_only"/>
+				</xpath>
+				
+				<field name="equipment_id" position="after">
+					<field name="Sous_Equip" domain="[('equipment_id','=',equipment_id)]"/>
+					<field name="user2_id_corr"/>
+				</field> 
+
+				<field name="equipment_id" position='replace'>
+						<field name="equipment_id" domain="[('line_id' ,'=', line_id_cm)]"  />
+						<field name="active_correction" invisible="1"/>
+				</field>
+				
+				<field name="equipment_id" position="before">
+					<field name="nature_mc"/>
+					<field name="line_id_cm"/>
+				</field> 
+
+				<!-- 
+				<field name="diagnosistab_ids" position="after">
+
+				<field name="cmms_inter_id" readonly="1"/>
+				
+				</field>        			
+                -->    			
+			</data>
+            </field>
+        </record>
+		
+		
+		
+		
+				<!--  creation d'OT au niveau du mantenance preventive -->
+		
+		<record model="ir.ui.view" id="preventive_to_bon_travailll">
+            <field name="name">M preventive</field>
+            <field name="model">cmms.pm</field>
+            <field name="inherit_id" ref="cmms.view_pm_form"/>
+			
+            <field name="arch" type="xml">
+                
+				        <xpath expr='/form/sheet//group[1]' position='before'>
+                		<button name="to_bon_travailll" type="object" string="Créer OT" icon="STOCK_REDO" invisible="1" />
+					 
+						</xpath>
+				<data>		
+						
+							<field name="name" position='after' >
+								<field name="version"/>
+								<field name="count_line_version"  invisible="1"/>
+							</field>
+							
+							<field name="meter" position='after' >
+							<group col="4" colspan="4">
+							
+							<field name="type_mp"/>
+							<field name="fournisseur"  attrs="{'invisible': [('type_mp', '!=','frs')]}" options="{'no_create':True}"/>
+							<field name="code_F"  attrs="{'invisible': [('type_mp', '!=','frs')]}" options="{'no_create':True}"/>
+							<field name="origine_mp"/>
+							<!-- <field name="attchs"  widget="many2many_binary"/> -->
+							<field name="days_interval1"/>
+							<field name="emetteur" invisible="1"/>
+							<field name="test_date" invisible="1"/>
+							<field name="affectation_mp" invisible="1"/>
+							<field name="attchment"  widget="many2many_binary"  />
+							<field name="archiver" />
+							<!-- <field name="retard" invisible="1" /> -->
+							</group>
+							</field>
+							
+							<field name="equipment_id" position="after">
+			
+								<field name="Sous_Equip" domain="[('equipment_id','=',equipment_id)]" options="{'no_create': True, 'no_create_edit':True}"/>
+								<field name="ot_regl"/>
+								<field name="prev_retard"  invisible="1"/>
+								<field name="supp"  invisible="1"/>
+				
+							</field> 
+							<field name="equipment_id" position='replace'>
+									<field name="equipment_id"/>
+							</field>
+							
+							<field name="name" position="after">
+								<field name="line_id_pm"/>
+							</field>
+									 
+                </data>
+            </field>
+        </record>
+		
+		<record model="ir.ui.view" id="preventive_teeview">
+            <field name="name">M preventive treeview</field>
+            <field name="model">cmms.pm</field>
+            <field name="inherit_id" ref="cmms.view_pm_tree"/>
+			
+            <field name="arch" type="xml">
+ 
+				<data>	
+
+				<field name="name" position="after">
+				<field name="ot_regl"/>
+				<field name="prev_retard" invisible="1"/>
+				</field>				
+				<field name="equipment_id" position="before">
+				<field name="line_id_pm"/>
+				</field>
+				<field name="equipment_id" position="after">					 				
+				<field name="Sous_Equip"/>					 				
+				<field name="meter"/>					 				
+				<field name="days_interval1"/>
+				<field name="days_last_done"/>							 
+				<field name="days_next_due2"/>	
+				<field name="emetteur"/>	
+				</field>
+                </data>
+            </field>
+        </record>
+		
+		
+
+	 <record model="ir.ui.view" id="form_child_line">
+            <field name="name">cmms.line.form </field>
+            <field name="model">cmms.line</field>
+            <field name="inherit_id" ref="cmms.view_line_form"/>
+            <field name="arch" type="xml">
+                <data>
+
+
+                <xpath expr='/form/sheet//group[3]' position="after">
+				<separator string="Sous ligne" colspan="4"/>
+                    <field name="child_line_ids" colspan="4" nolabel="1">
+                        <tree string="Answers" editable="bottom">
+							<field name="Ref_sl" select="1"/>
+                            <field name="name" select="1"/>
+							
+                            <field name="sequence_sl" select="1"/>
+                            <field name="emplacement_sl" select="1"/>
+                           
+                        </tree>
+                    </field>
+				</xpath> 
+				</data>
+            </field>
+        </record> 	
+
+		
+        <record model="ir.ui.view" id="view_equipment_form_child_line">
+            <field name="name">cmms.line.form chidl </field>
+            <field name="model">cmms.equipment</field>
+            <field name="inherit_id" ref="cmms.view_equipment_form"/>
+            <field name="arch" type="xml">
+                <data>
+
+                <field name="line_id" position='after' >
+                <field name="child_line_id"  attrs="{'readonly': [('line_id', '=', False)]}" options="{'no_create':True}"/>
+				</field>
+				<field name="deadlinegar" position='after' >
+				<field name="ot_regl"/>
+				</field>
+				</data>
+				
+            </field>
+        </record> 
+		
+		<!--view form question-->
+		 <record model="ir.ui.view" id="question">
+            
+            <field name="model">cmms.checklist</field>
+            <field name="inherit_id" ref="cmms.view_checklist_form"/>
+            <field name="arch" type="xml">
+                <data>
+				
+                <field name="name" position='after'>
+				
+                <field name="equipment_id"/>
+				<field name="Sous_Equip" domain="[('equipment_id','=',equipment_id)]"/>
+				<field name="meters_question"/>
+				
+				</field>
+				
+				</data>
+             </field>
+        </record> 
+
+		                                  
+		
+		 <record model="ir.ui.view" id="prevt">
+            
+            <field name="model">cmms.pm</field>
+            <field name="inherit_id" ref="cmms.view_pm_form"/>
+            <field name="arch" type="xml">
+                <data>
+			 
+				<xpath expr='/form/sheet//group[1]' position="after">
+			 
+                 <field name="checklist_id" select="1" on_change="onchange_checklist_id(checklist_id)" domain="[('equipment_id','=',equipment_id)]" attrs="{'readonly': [('equipment_id', '=',False)]}"/>
+				<separator string="Questions" colspan="4"/>
+                    <field name="answers_ids_pm" colspan="4" nolabel="1">
+					
+					
+                        <tree string="Answers" editable="bottom">
+                            <!-- <field name="name" select="1"/> -->
+							<!-- <field name="etat" select="1"/> -->
+                            <!-- <field name="profil" select="1"/> -->
+                            <!-- <field name="pdr" select="1"/> -->
+                            <!-- <field name="consommables" select="1"/> -->
+                            <!-- <field name="outillage" select="1"/> -->
+                            <!-- <field name="etat_reference" select="1"/> -->
+                            <!-- <field name="duree" select="1"/> -->
+                            <!-- <field name="observation" select="1"/> -->
+							
+							<field name="name" select="1"/>
+							<field name="etat" select="1"/>
+                            <field name="profil" select="1"/>
+                            <field name="pdr" select="1"/>
+                            <field name="consommables" select="1"/>
+                            <field name="outillage" select="1"/>
+                            <field name="etat_reference" select="1" invisible="1"/>
+                            <field name="etat_ref" select="1"/>
+                            <field name="etat_ref_max" select="1"/>
+                            <field name="unite" select="1"/>
+                            <field name="duree" select="1" widget='float_time' />
+							<field name="Date_realisation"  />
+                            <field name="observation" select="1"/>
+							
+
+                        </tree>
+                    </field>
+
+                    <field name="line_ids_version" colspan="4" nolabel="1" context="{'default_equipment_id': equipment_id,'default_Sous_Equip': Sous_Equip,'default_ref_mp': name}">					
+                        <tree string="Version" editable="bottom">
+							<!-- <field name="version" select="1"/> -->
+							<field name="date_creation" select="1"/>
+							<field name="user_id" select="1"/>
+							<field name="ref_mp" select="1" invisible="1"/>
+							<field name="equipment_id" select="1" invisible="1"/>
+							<field name="Sous_Equip" select="1" invisible="1"/>
+                            <field name="nature_modif" select="1"/>
+							<field name="intitule" select="1"/>
+                        </tree>
+                    </field>
+					
+					<field name="panier_pr" colspan="4" nolabel="1"  attrs="{'invisible': [('name', '!=','PM-00220')]}" >   
+                        <tree string="Answers" editable="bottom">
+							<field name="reference" select="1"/>
+                        </tree>
+                    </field>
+		 
+				</xpath>
+				
+				</data>
+             </field>
+        </record> 
+
+
+
+		
+		<!--  creation d'OT au niveau du demande d'intervention		-->
+		
+	    <record model="ir.ui.view" id="demande_intervention_to_bon_travail">
+            <field name="name">demande Intervention </field>
+            <field name="model">cmms.intervention</field>
+            <field name="inherit_id" ref="cmms.view_intervention_form"/>
+            <field name="arch" type="xml">
+                <data>
+				
+				        <button name="action_broadcast" position='after'>
+                		<button name="to_bon_travail" type="object" string="Créer MC et OT" icon="STOCK_REDO" class="oe_read_only"
+						 attrs="{'invisible': [('active_intervention', '=',True)]}"/> 
+						</button>
+						
+						 
+						<!--
+						<xpath expr='/form/sheet/notebook//page[2]' position='after'>
+
+                        <page string="MC">
+                            <field colspan="8" mode="tree" name="ot_ids" nolabel="1"  readonly="1">
+								<tree>
+									<field name="name" readonly="1"/>
+								</tree>
+							</field>
+                        </page>
+
+						</xpath>
+						-->
+						<field name="equipment_id" position='after' >
+								<field name="Sous_Equip"  domain="[('equipment_id','=',equipment_id)]"/>
+								<field name="failure_id"/>
+								<field name="active_intervention" invisible="1"/>
+						</field>
+						<field name="equipment_id" position='before'>
+								<field name="line_id_intervention"  />
+						</field>
+						
+						<field name="equipment_id" position='replace'>
+								<field name="equipment_id" />
+								 <!-- domain="[('line_id_intervention','=',line_id_intervention)]" -->
+						</field>
+                </data>
+            </field>
+        </record>
+		
+		
+<!--l'ajout du champ OT qui ont une statut lancer  -->		
+		<record id="mouvement_stock" model="ir.ui.view">
+             <field name="name">mouvement_stock_ot</field>
+             <field name="model">stock.move</field>
+             <field name="inherit_id" ref="stock.view_move_form"/>
+             <field name="arch" type="xml">
+				 <field name="origin" position="before">
+					 <field name="ot_stock_move"  domain="[('statut','=','done')]"/>
+
+                 </field>
+             </field>
+         </record>
+
+
+<!--stock.history (fichier stock_account/wizard/stock_valuation_history)  -->		  
+		<record id="mouvement_history" model="ir.ui.view">
+             <field name="name">mouvement.history.tree</field>
+             <field name="model">stock.history</field>
+			 
+             <field name="inherit_id" ref="stock_account.view_stock_history_report_tree"/>
+             <field name="arch" type="xml">
+				 <field name="date" position="before">
+					 <field name="valeur_stock"  />
+
+                 </field>
+             </field>
+         </record>		 
+
+<!--Menu version pour les actions de preventive -->
+        <record id="view_cmms_version_form" model="ir.ui.view">
+            <field name="name">cmms.version.form</field>
+            <field name="model">cmms.version</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="version" version="7.0">
+                    <sheet>
+ 
+						<group>
+							<field name="date_creation" select="1"/>
+							<field name="user_id" select="1"/>
+							<field name="ref_mp" select="1" invisible="0"/>
+							<field name="equipment_id" select="1" invisible="0"/>
+							<field name="Sous_Equip" select="1" invisible="0"/>
+                            <field name="intitule" select="1"/>
+                            <field name="nature_modif" select="1"/>
+						</group>
+  
+                    </sheet>
+   
+                </form>
+            </field>
+        </record>
+        <record id="view_cmms_version_tree" model="ir.ui.view">
+            <field name="name">cmms.version.tree</field>
+            <field name="model">cmms.version</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="version">
+						<field name="date_creation" select="1"/>
+						<field name="user_id" select="1"/>
+						<field name="ref_mp" select="1"/>
+						<field name="equipment_id" select="1"/>
+						<field name="Sous_Equip" select="1"/>
+						<field name="intitule" select="1"/>
+						<field name="nature_modif" select="1"/>
+                </tree>
+            </field>
+        </record>
+ 
+
+        <record id="open_view_cmms_version_new" model="ir.actions.act_window">
+            <field name="name">Version</field>
+            <field name="res_model">cmms.version</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>	
+		
+	</data>
+</openerp>

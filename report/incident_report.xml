@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report
+                    string="OT"
+                    id="action_report_incident"
+                    model="cmms.incident"
+                    report_type="qweb-pdf"
+                    name="gmao_alm.incident_template_report"
+                    file="gmao_alm.incident_template_report"
+                />
+				
+		<report
+                    string="Fiche de Vie"
+                    id="action_report_incident1"
+                    model="cmms.incident"
+                    report_type="qweb-pdf"
+                    name="gmao_alm.incident_template_report1"
+                    file="gmao_alm.incident_template_report1"   
+                />
+
+
+ 
+
+        </data>
+</openerp>
+
+ 
