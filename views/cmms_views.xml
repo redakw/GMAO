@@ -381,7 +381,7 @@
 				</xpath>
 				
 				<xpath expr='/form/sheet/notebook//page[4]' position="after" >
-					<page string="Observation" > 
+					<page string="Observation." > 
 						<field name="observation"  />					
 					</page> 	
 				</xpath>
